@@ -1,41 +1,67 @@
-# Robô Seguidor de Linha
-Robô autonomo que segue uma linha preta em um fundo branco.Este projeto funciona com a seguinte lógica:
+# Robô Seguidor de Linha👾
+Robô autonomo que **segue uma linha preta em um fundo branco**.Este projeto funciona com a seguinte lógica:
 
-Leitura • Você lê o estado de cada sensor (por exemplo, com digitalRead()). • Cada sensor retorna “linha preta” ou “fundo branco” (pode ser HIGH ou LOW, depende do seu módulo).
+**Leitura** • Você lê o estado de cada sensor (por exemplo, com digitalRead()). • Cada sensor retorna “linha preta” ou “fundo branco” (pode ser HIGH ou LOW, depende do seu módulo).
 
-Interpretação • Ambos veem branco → a faixa preta está entre os sensores, ou seja, o robô está no centro do caminho. • Só o esquerdo vê preto → a linha “bateu” no sensor esquerdo, o robô deslocou-se para direita da linha e precisa virar levemente para a esquerda. • Só o direito vê preto → o robô está deslocado para esquerda da linha e precisa virar levemente para a direita. • Ambos veem preto → o robô saiu totalmente da pista ou encontrou um cruzamento; a resposta mais simples é parar ou entrar numa rotina de busca.
+**Interpretação** • Ambos veem branco → a faixa preta está entre os sensores, ou seja, o robô está no centro do caminho. • Só o esquerdo vê preto → a linha “bateu” no sensor esquerdo, o robô deslocou-se para direita da linha e precisa virar levemente para a esquerda. • Só o direito vê preto → o robô está deslocado para esquerda da linha e precisa virar levemente para a direita. • Ambos veem preto → o robô saiu totalmente da pista ou encontrou um cruzamento; a resposta mais simples é parar ou entrar numa rotina de busca.
 
-Ação • No centro (branco/branco): mandar os dois motores com a mesma velocidade — segue reto. • Desvio para esquerda (esq=preto, dir=branco): reduzir a velocidade do motor esquerdo e manter (ou elevar) a do direito — curva suave para a esquerda. • Desvio para direita (esq=branco, dir=preto): reduzir a velocidade do motor direito e manter (ou elevar) a do esquerdo — curva suave para a direita. • Fora da linha (preto/preto): parar ambos motores para não perder controle.
+**Ação** • No centro (branco/branco): mandar os dois motores com a mesma velocidade — segue reto. • Desvio para esquerda (esq=preto, dir=branco): reduzir a velocidade do motor esquerdo e manter (ou elevar) a do direito — curva suave para a esquerda. • Desvio para direita (esq=branco, dir=preto): reduzir a velocidade do motor direito e manter (ou elevar) a do esquerdo — curva suave para a direita. • Fora da linha (preto/preto): parar ambos motores para não perder controle.
 
 Esse processo de “ler → interpretar → ajustar velocidades” acontece dezenas de vezes por segundo, garantindo que o robô fique sempre reagindo ao desvio com correções suaves.
 
 
 
 
-## Lista de materiais
+## Lista de materiais⚙️
 
-1.Arduino UNO (1x)
+**1.** Arduino UNO (1x)
 
-2.Ponte H dupla (1x)
+**2.** Ponte H dupla (1x)
 
-3.Sensor de obstáculos reflexivo infravermelho (2x)
+**3.** Sensor de obstáculos reflexivo infravermelho (2x)
 
-4.Suporte de pilhas (1x)
+**4.** Suporte de pilhas (1x)
 
-5.Pilha (4x)
+**5.** Pilha (4x)
 
-6.Bateria de 9V (1x)
+**6.** Bateria de 9V (1x)
 
-7.Motor (2x)
+**7.** Motor (2x)
 
-8.Chassi (1x)
+**8.** Chassi (1x)
 
+<img width="512" height="377" alt="image" src="https://github.com/user-attachments/assets/66f523e7-364f-4c51-9062-e2275c99f38f" />
 
-![download](https://github.com/user-attachments/assets/c189b43e-8e88-42c5-92a1-589c169de6ec)
 
 OBS: Também é necessário cabos jumper e ferramentas como chaves philips.
 
-## Conexões
+______________________________________________________________________________________________________________________________________________________________________
+
+### Montagem
+
+* Conecte as entradas digitais(Dx) aos IN's da ponte H dupla e ligue.
+
+* As entradas de "sinal" dos sensores devem ser conectados aos pinos digitais do Arduino (D6 e D7).
+
+* Ligue as entradas VCC e GNG dos sensores no VCC e GND do Arduino
+
+* Ligue a "parte positiva" das pilhas no 12V da ponte H
+
+* Ligue a "parte negativa" das pilhas no GND da ponte H
+
+* Ligue os motores a ponte H (tome cuidado para não inverter as fases, muda o sentido do giro)
+
+**OBS:** Verifique as conexões antes de alimentar o Arduino
+
+
+
+## Conexões⚡
+
+
+<img width="683" height="500" alt="image" src="https://github.com/user-attachments/assets/01542313-c367-44cb-8c88-fc9eec1c53e6" />
+
+
+
 
 
 | Componente | Pino do Arduino |
@@ -47,15 +73,25 @@ OBS: Também é necessário cabos jumper e ferramentas como chaves philips.
 | Sensor direito | D6              |
 | Sensor esquerdo | D7              |
 
-
-<img width="300" height="168" alt="download" src="https://github.com/user-attachments/assets/981a24a7-f3ec-4774-a283-cdde1a7df494" />
-
-
-Ligue as entradas VCC e GNG dos sensores no VCC e GND do Arduino(respectivamente)
+_____________________________________________________________________________________________________________________________________________________________
 
 
+### Pinagem do sensor
 
-## Código
+
+<img width="512" height="377" alt="image" src="https://github.com/user-attachments/assets/37d43ddc-d296-42b0-bf51-9c68637fe5dd" />
+
+
+
+
+
+
+
+Ligue as entradas VCC e GNG dos sensores no VCC e GND do Arduino(respectivamente).
+
+
+
+## Código💻
 
 ```
 // Controle do L298N
@@ -111,6 +147,29 @@ void loop() {
   }
 }
 ```
+
+caso o código apresente alguma falha, olhe as **entradas digitais** que estão sendo usadas, costma ser isso.
+
+
+## Resultado❗
+
+
+
+https://github.com/user-attachments/assets/6f975571-af58-4cbe-87cd-664b2785b8c8
+
+
+
+
+## considerações
+
+Quando for colocar o sensor no carrinho, se atente a distancia entre eles, para fazer a linha juntei duas fitas isolantes, ficou com 1.5CM de diametro (na média isso) e coloquei o sensor a 2.5CM um do outro. Caso não funcione vá testando outras distâncias, e recomendo usar uma fita barata ou canetão preto se a sua pista for de azulejo por exemplo.
+
+### Referência
+
+https://blog.eletrogate.com/robo-seguidor-de-linha-tutorial-completo/
+
+
+
 
 
 
